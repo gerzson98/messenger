@@ -14,6 +14,6 @@
     <br>
     <input id="logIn-button" type="submit" name="update" value="UPDATE">
     <br>
-    <input id="logIn-button" type="submit" name="back" value="Back">
+    <input id="logIn-button" type="submit" name="back" value="BACK">
   </form>
 </div>

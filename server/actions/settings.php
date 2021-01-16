@@ -1,6 +1,6 @@
 <?php
   include '../db/db.php';
-  include '../db/dbFunctions.php';
+  include '../functions/userFunctions.php';
 
   if (isset($_POST['update'])) {
     $userName = $_POST['userName'];
@@ -43,6 +43,7 @@
           exit;
         } else {
           $_SESSION['viewHandler'] = "updateSucceed";
+          $_SESSION['loggedInAs'] = $userName;
           header("Location: ../../index.php");
           exit;
         }

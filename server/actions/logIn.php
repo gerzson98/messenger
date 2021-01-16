@@ -1,7 +1,7 @@
 <?php
   session_start();
   include '../db/db.php';
-  include '../db/dbFunctions.php';
+  include '../functions/userFunctions.php';
   //date_default_timezone_set('Europe/Budapest');
   if (isset($_POST['logIn'])) {
     $userName = $_POST['userName'];

@@ -1,7 +1,7 @@
 <?php
   session_start();
   include '../db/db.php';
-  include '../db/dbFunctions.php';
+  include '../functions/userFunctions.php';
 
   if (isset($_POST['register'])) {
     $userName = $_POST['userName'];
