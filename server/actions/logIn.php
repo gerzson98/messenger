@@ -2,11 +2,9 @@
   session_start();
   include '../db/db.php';
   include '../functions/userFunctions.php';
-  //date_default_timezone_set('Europe/Budapest');
   if (isset($_POST['logIn'])) {
     $userName = $_POST['userName'];
     $password = $_POST['password'];
-    // $time = date('Y-m-d h:i:s');
     if (!isset($userName) || $userName == '' || !isset($password) || $password == '') {
       $error = 'Please enter your username and your password!';
       header("Location: ../../index.php?error=".urlencode($error));
@@ -14,6 +12,7 @@
     } else {
       if (logIn($userName, $password, $sql)) {
         $_SESSION['loggedInAs'] = $userName;
+        $_SESSION['viewHandler'] = "cards";
         header("Location: ../../index.php");
         exit;
       } else {
