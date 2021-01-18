@@ -1,8 +1,7 @@
 <?php
-  session_start();
-  include './server/db/db.php';
 
   function logIn ($userName, $password) {
+    $sql = $_SESSION['con'];
     $query = "SELECT id FROM users WHERE userName = '".$userName."' AND password = '".$password."';";
     $result = $sql->query($query);
     if (!$result) {
@@ -16,7 +15,8 @@
   }
 
   function getUserId ($userName) {
-    $getIdQuery = "SELECT id LIMIT 1 FROM users WHERE userName = '".$userName."';";
+    $sql = $_SESSION['con'];
+    $getIdQuery = "SELECT id FROM users WHERE userName = '".$userName."';";
     $result = $sql->query($getIdQuery);
     if (!$result) {
       echo "getUserId's query went wrong on DB level.";
@@ -28,7 +28,26 @@
     }
   }
 
+  function getUserNameById ($userId) {
+    $sql = $_SESSION['con'];
+    $query = "SELECT userName FROM users WHERE id = ".$userId.";";
+    $result = $sql->query($query);
+    if (!$result) {
+      echo "getUserName failed at DB level.";
+      exit;
+    } else {
+      $userName = $result->fetch_array(MYSQLI_ASSOC)['userName'];
+      if ($userName == '') {
+        echo "Could not get the userName";
+        exit;
+      } else {
+        return $userName;
+      }
+    }
+  }
+
   function validateUserName ($userName) {
+    $sql = $_SESSION['con'];
     $validateUserQuery = "SELECT id FROM users WHERE userName = '".$userName."';";
     $result = $sql->query($validateUserQuery);
     if (!$result) {
@@ -42,6 +61,7 @@
   }
 
   function register ($userName, $password) {
+    $sql = $_SESSION['con'];
     if (validateUserName($userName, $sql)) {
       $insertQuery = "INSERT INTO users (userName, password) VALUES ('".$userName."', '".$password."');";
       $result = $sql->query($insertQuery);
@@ -56,6 +76,7 @@
   }
 
   function deleteUser ($userName) {
+    $sql = $_SESSION['con'];
     $deleteQuery = "DELETE FROM users WHERE userName = '".$userName."';";
     $result = $sql->query($deleteQuery);
     if (!$result) {
@@ -66,6 +87,7 @@
   }
 
   function updateUser ($userName, $password) {
+    $sql = $_SESSION['con'];
     $updateQuery = "UPDATE users SET userName = '".$userName."', password = '".$password."' WHERE userName = '".$userName."';";
     $result = $sql->query($updateQuery);
     if (!$result) {

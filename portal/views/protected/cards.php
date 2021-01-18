@@ -1,13 +1,13 @@
 
 <?php
-  $getChats = "SELECT id FROM chats WHERE userOne = '".$_SESSION['loggedInAs']."' OR userTwo ='".$_SESSION['loggedInAs']."';";
-  $chatIds = $sql->query($getChats);
+  include 'D:/Suli/Info/php/messenger/server/functions/chatFunctions.php';
+  $cardDatas = getAllForCards();
 ?>
-<?php foreach ($chats as $chat) : ?>
-  <?php
-    $userName = $chat->userName;
-    $lastMSG = $chat->lastMSG;
-    include '../../components/chatCard.php';
-  ?>
-<?php endforeach; ?>
-<?php include './portal/components/addCard.php'; ?>
+<div id="cardsContainer">
+  <?php foreach ($cardDatas as $data) : ?>
+    <?php
+      include 'D:/Suli/Info/php/messenger/portal/components/chatCard.php';
+    ?>
+  <?php endforeach; ?>
+</div>
+<?php include 'D:/Suli/Info/php/messenger/portal/components/addCard.php'; ?>

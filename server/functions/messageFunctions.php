@@ -1,9 +1,9 @@
 <?php
-  session_start();
 
-  include './server/db/db.php';
+  include 'D:/Suli/Info/php/messenger/server/classes/message.php';
 
   function getAllMSGById($chatId) {
+    $sql = $_SESSION['con'];
     $query = "SELECT * FROM messages ORDER by id DESC WHERE chatId = ".$chatId.";";
     $result = $sql->query($query);
     if (!$result) {
@@ -11,8 +11,9 @@
       exit;
     } else {
       $messages = array();
-      while ($row = mysqli_fetch_assoc($result)) {
-        $messages[] = $row;
+      while ($row = $result->fetch_array(MYSQLI_ASSOC)) {
+        $message = new message($row['chatId'], $row['sentAt'], $row['message'], $row['sentBy']);
+        $messages[] = $message;
       }
       $result->free();
       return $messages;
@@ -20,19 +21,25 @@
   }
 
   function getLastMSG($chatId) {
-    $query = "SELECT * FROM messages LIMIT 1 ORDER by id DESC WHERE chatId = ".$chatId.";";
+    $sql = $_SESSION['con'];
+    $query = "SELECT * FROM messages WHERE chatId = ".$chatId." ORDER by id DESC;";
     $result = $sql->query($query);
     if (!$result) {
       echo "getLastMSG query went wrong at DB level.";
       exit;
-    } else {
-      $lastMSG = mysqli_fetch_assoc($result);
+    } elseif ($result->num_rows > 0) {
+      $row = $result->fetch_array(MYSQLI_ASSOC);
       $result->free();
-      return $lastMSG;
+      $message = new message($row['chatId'], $row['sentAt'], $row['message'], $row['sentBy']);
+      return $message;
+    } else {
+      $message = new message($chatId, "00:00", "No messages yet", $_SESSION['myId']);
+      return $message;
     }
   }
 
   function deleteByChatId($chatId) {
+    $sql = $_SESSION['con'];
     $query = "DELETE * FROM messages WHERE chatId = ".$chatId.";";
     $result = $sql->query($query);
     if (!$result) {

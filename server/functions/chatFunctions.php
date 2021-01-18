@@ -1,28 +1,12 @@
 <?php
-  session_start();
-  include './server/db/db.php';
+  include 'D:/Suli/Info/php/messenger/server/db/db.php';
   include 'userFunctions.php';
+  include 'messageFunctions.php';
+  include 'D:/Suli/Info/php/messenger/server/classes/cardData.php';
 
-  function getIds ($userNameOne, $userNameTwo) {
-    $getIdsQuery = "SELECT id FROM users WHERE userName = '".$userNameOne."' OR userName = '".$userNameTwo."';";
-    $ids = $sql->query($getIdsQuery);
-    if (!$ids) {
-      $error = "GetIdsQuery went wrong somehow.";
-      header("Location: ../../index.php".urlencode($error));
-      exit;
-    } elseif ($ids->num_rows < 2) {
-      $error = "The username of the addressee isn't right.";
-      header("Location: ../../index.php".urlencode($error));
-      exit;
-    } else {
-      $tmpArray = $ids->fetch_array(MYSQLI_NUM);
-      $idArray = [$ids[0]['id'], $ids[1]['id']];
-      return $idArray;
-    }
-  }
-
-  function getAllChatIds ($userName) {
-    $id = getUserId($userName);
+  function getAllChatIds () {
+    $sql = $_SESSION['con'];
+    $id = $_SESSION['myId'];
     $getAllQuery = "SELECT id FROM chats WHERE userOne = ".$id." OR userTwo = ".$id.";";
     $result = $sql->query($getAllQuery);
     if (!$result) {
@@ -30,7 +14,7 @@
       exit;
     } else {
       $chatIds = array();
-      while ($chatId = mysqli_fetch_assoc($result)) {
+      while ($chatId = $result->fetch_array(MYSQLI_ASSOC)) {
         $chatIds[] = $chatId['id'];
       }
       $result->free();
@@ -38,10 +22,38 @@
     }
   }
 
+  function getUserIdsByChatId ($chatId) {
+    $sql = $_SESSION['con'];
+    $query = "SELECT userOne, userTwo FROM chats WHERE id = ".$chatId.";";
+    $result = $sql->query($query);
+    if (!$result) {
+      echo "Couldnt get userIds by chat id. Failed at DB level.";
+      exit;
+    } else {
+      $userIds = $result->fetch_array(MYSQLI_ASSOC);
+      $result->free();
+      return $userIds;
+    }
+  }
+
+  function getOthersName ($chatId) {
+    $sql = $_SESSION['con'];
+    $ids = getUserIdsByChatId($chatId);
+    if ($ids['userOne'] == $_SESSION['myId']) {
+      return getUserNameById($ids['userTwo']);
+    } else {
+      return getUserNameById($ids['userOne']);
+    }
+  }
+  
   function createChat ($userName) {
-    $ids = getIds($_SESSION['loggedInAs'], $userName);
+    $sql = $_SESSION['con'];
+    $ids = array();
+    $ids[] = getUserId($_SESSION['loggedInAs']);
+    $ids[] = getUserId($userName);
     $createQuery = "INSERT INTO chats (userOne, userTwo) VALUES (".$ids[0].", ".$ids[1].");";
-    if (!$sql->query($createQuery)) {
+    $result = $sql->query($createQuery);
+    if (!$result) {
       $error = "Something went wrong at creating chat.";
       header("Location: ../../index.php".urlencode($error));
       exit;
@@ -52,6 +64,7 @@
   }
 
   function deleteChat ($chatId) {
+    $sql = $_SESSION['con'];
     $delQuery = "DELETE FROM chats WHERE chatId = ".$chatId.";";
     $result = $sql->query($delQuery);
     if (!$result) {
@@ -62,4 +75,17 @@
       exit;
     }
   }
-?>
+
+  function getAllForCards () {
+    $chatIds = getAllChatIds();
+    $cardDatas = array();
+    foreach ($chatIds as $chatId) {
+      $othersName = getOthersName($chatId);
+      $lastMessage = getLastMSG($chatId);
+      $card = new cardData($chatId, $othersName, $lastMessage);
+      $cardDatas[] = $card;
+    }
+    return $cardDatas;
+  }
+
+  ?>

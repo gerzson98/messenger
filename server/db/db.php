@@ -1,7 +1,7 @@
 <?php
-  $sql = new mysqli('localhost', 'root', 'root', 'messenger');
-  if ($sql->connect_errno) {
-    die('Failed to connect to MySQL: '.$sql->connect_error);
+$_SESSION['con'] = new mysqli('localhost', 'root', 'root', 'messenger');
+  if ($_SESSION['con']->connect_errno) {
+    die('Failed to connect to MySQL: '.$_SESSION['con']->connect_error);
     exit;
   }
 ?>

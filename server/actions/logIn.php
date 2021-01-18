@@ -12,6 +12,7 @@
     } else {
       if (logIn($userName, $password)) {
         $_SESSION['loggedInAs'] = $userName;
+        $_SESSION['myId'] = getUserId($userName);
         $_SESSION['viewHandler'] = "cards";
         header("Location: ../../index.php");
         exit;
