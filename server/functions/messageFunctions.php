@@ -1,7 +1,7 @@
 <?php
   session_start();
 
-  include '../db/db.php';
+  include './server/db/db.php';
 
   function getAllMSGById($chatId) {
     $query = "SELECT * FROM messages ORDER by id DESC WHERE chatId = ".$chatId.";";
@@ -29,6 +29,18 @@
       $lastMSG = mysqli_fetch_assoc($result);
       $result->free();
       return $lastMSG;
+    }
+  }
+
+  function deleteByChatId($chatId) {
+    $query = "DELETE * FROM messages WHERE chatId = ".$chatId.";";
+    $result = $sql->query($query);
+    if (!$result) {
+      echo "Something went wrong at deleteMessages by chatId on DB level.";
+      exit;
+    } else {
+      header("Location: ../../index.php");
+      exit;
     }
   }
 

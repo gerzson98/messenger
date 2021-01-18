@@ -1,6 +1,7 @@
 <?php
   session_start();
   include './server/db/db.php';
+  include 'userFunctions.php';
 
   function getIds ($userNameOne, $userNameTwo) {
     $getIdsQuery = "SELECT id FROM users WHERE userName = '".$userNameOne."' OR userName = '".$userNameTwo."';";
@@ -17,6 +18,23 @@
       $tmpArray = $ids->fetch_array(MYSQLI_NUM);
       $idArray = [$ids[0]['id'], $ids[1]['id']];
       return $idArray;
+    }
+  }
+
+  function getAllChatIds ($userName) {
+    $id = getUserId($userName);
+    $getAllQuery = "SELECT id FROM chats WHERE userOne = ".$id." OR userTwo = ".$id.";";
+    $result = $sql->query($getAllQuery);
+    if (!$result) {
+      echo "Something went wrong with getAllChatId's query.";
+      exit;
+    } else {
+      $chatIds = array();
+      while ($chatId = mysqli_fetch_assoc($result)) {
+        $chatIds[] = $chatId['id'];
+      }
+      $result->free();
+      return $chatIds;
     }
   }
 

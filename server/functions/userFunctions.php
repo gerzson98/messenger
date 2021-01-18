@@ -15,6 +15,19 @@
     }
   }
 
+  function getUserId ($userName) {
+    $getIdQuery = "SELECT id LIMIT 1 FROM users WHERE userName = '".$userName."';";
+    $result = $sql->query($getIdQuery);
+    if (!$result) {
+      echo "getUserId's query went wrong on DB level.";
+      exit;
+    } else {
+      $id = mysqli_fetch_assoc($result)['id'];
+      $result->free();
+      return $id;
+    }
+  }
+
   function validateUserName ($userName) {
     $validateUserQuery = "SELECT id FROM users WHERE userName = '".$userName."';";
     $result = $sql->query($validateUserQuery);
