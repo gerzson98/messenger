@@ -1,4 +1,5 @@
 <?php
+  session_start();
   include '../db/db.php';
   include '../functions/userFunctions.php';
 

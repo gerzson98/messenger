@@ -4,15 +4,16 @@
 
   function getAllMSGById($chatId) {
     include 'D:/Suli/Info/php/messenger/server/db/db.php';
-    $query = "SELECT * FROM messages ORDER by id DESC WHERE chatId = ".$chatId.";";
+    $query = "SELECT * FROM messages WHERE chatId = ".$chatId." ORDER BY id DESC;";
     $result = $sql->query($query);
     if (!$result) {
-      echo "getAllMSGById's query went wrong on DB level.";
+      echo "getAllMSGById's query went wrong on DB level. with query: ".$query;
       exit;
     } else {
       $messages = array();
       while ($row = $result->fetch_array(MYSQLI_ASSOC)) {
-        $message = new message($row['chatId'], $row['sentAt'], $row['message'], $row['sentBy']);
+        $sentAt = substr($row['sentAt'], -8, 5);
+        $message = new message($row['chatId'], $sentAt, $row['message'], $row['sentBy']);
         $messages[] = $message;
       }
       $result->free();

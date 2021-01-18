@@ -10,5 +10,8 @@
     <input id="send-button" type="submit" name="sendMessage" value="SEND">
   </form>
   <br>
-  <input id="openChat-button" type="submit" action="../attachRoutes.php" value="OPEN CHAT">
+  <form method="post" action="./portal/attachRoutes.php">
+    <input hidden type="number" name="chatId" value=<?php echo $data->chatId; ?> >
+    <input id="openChat-button" type="submit" name="openChat" value="OPEN CHAT">
+  </form>
 </div>

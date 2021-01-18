@@ -13,4 +13,15 @@
     header("Location: ../../index.php");
     exit;
   }
+  
+  if (isset($_POST['openChat'])) {
+    $_SESSION['viewHandler'] = "chat";
+    $_SESSION['chatId'] = $_POST['chatId'];
+    header("Location: ../../index.php");
+    exit;
+  }
+
+  if (isset($_POST['backToCards'])) {
+    
+  }
 ?>
