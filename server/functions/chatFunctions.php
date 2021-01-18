@@ -1,11 +1,10 @@
 <?php
-  include 'D:/Suli/Info/php/messenger/server/db/db.php';
   include 'userFunctions.php';
   include 'messageFunctions.php';
   include 'D:/Suli/Info/php/messenger/server/classes/cardData.php';
 
   function getAllChatIds () {
-    $sql = $_SESSION['con'];
+    include 'D:/Suli/Info/php/messenger/server/db/db.php';
     $id = $_SESSION['myId'];
     $getAllQuery = "SELECT id FROM chats WHERE userOne = ".$id." OR userTwo = ".$id.";";
     $result = $sql->query($getAllQuery);
@@ -23,7 +22,7 @@
   }
 
   function getUserIdsByChatId ($chatId) {
-    $sql = $_SESSION['con'];
+    include 'D:/Suli/Info/php/messenger/server/db/db.php';
     $query = "SELECT userOne, userTwo FROM chats WHERE id = ".$chatId.";";
     $result = $sql->query($query);
     if (!$result) {
@@ -37,7 +36,7 @@
   }
 
   function getOthersName ($chatId) {
-    $sql = $_SESSION['con'];
+    include 'D:/Suli/Info/php/messenger/server/db/db.php';
     $ids = getUserIdsByChatId($chatId);
     if ($ids['userOne'] == $_SESSION['myId']) {
       return getUserNameById($ids['userTwo']);
@@ -46,25 +45,46 @@
     }
   }
   
+  function checkIfExists($userOneId, $userTwoId) {
+    include 'D:/Suli/Info/php/messenger/server/db/db.php';
+    $query = "SELECT id FROM chats WHERE userOne IN (".$userOneId.", ".$userTwoId.") AND userTwo IN (".$userOneId.", ".$userTwoId.");";
+    $result = $sql->query($query);
+    $sql->close();
+    if (!$result) {
+      echo "Something went wrong at DB level with checkIfExists";
+      exit;
+    } elseif ($result->num_rows == 0) {
+      return false;
+    } else {
+      return true;
+    }
+  }
+
   function createChat ($userName) {
-    $sql = $_SESSION['con'];
+    include 'D:/Suli/Info/php/messenger/server/db/db.php';
     $ids = array();
     $ids[] = getUserId($_SESSION['loggedInAs']);
     $ids[] = getUserId($userName);
-    $createQuery = "INSERT INTO chats (userOne, userTwo) VALUES (".$ids[0].", ".$ids[1].");";
-    $result = $sql->query($createQuery);
-    if (!$result) {
-      $error = "Something went wrong at creating chat.";
-      header("Location: ../../index.php".urlencode($error));
-      exit;
+    if (!checkIfExists($ids[0], $ids[1])) {
+      $createQuery = "INSERT INTO chats (userOne, userTwo) VALUES (".$ids[0].", ".$ids[1].");";
+      $result = $sql->query($createQuery);
+      if (!$result) {
+        $error = "Something went wrong at creating chat.";
+        header("Location: ../../index.php");
+        exit;
+      } else {
+        header("Location: ../../index.php");
+        exit;
+      }
     } else {
+      $error = "Chat between you and this user already exists.";
       header("Location: ../../index.php");
       exit;
     }
   }
 
   function deleteChat ($chatId) {
-    $sql = $_SESSION['con'];
+    include 'D:/Suli/Info/php/messenger/server/db/db.php';
     $delQuery = "DELETE FROM chats WHERE chatId = ".$chatId.";";
     $result = $sql->query($delQuery);
     if (!$result) {
