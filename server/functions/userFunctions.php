@@ -1,6 +1,8 @@
 <?php
   session_start();
-  function logIn ($userName, $password, $sql) {
+  include './server/db/db.php';
+
+  function logIn ($userName, $password) {
     $query = "SELECT id FROM users WHERE userName = '".$userName."' AND password = '".$password."';";
     $result = $sql->query($query);
     if (!$result) {
@@ -13,7 +15,7 @@
     }
   }
 
-  function validateUserName ($userName, $sql) {
+  function validateUserName ($userName) {
     $validateUserQuery = "SELECT id FROM users WHERE userName = '".$userName."';";
     $result = $sql->query($validateUserQuery);
     if (!$result) {
@@ -26,7 +28,7 @@
     }
   }
 
-  function register ($userName, $password, $sql) {
+  function register ($userName, $password) {
     if (validateUserName($userName, $sql)) {
       $insertQuery = "INSERT INTO users (userName, password) VALUES ('".$userName."', '".$password."');";
       $result = $sql->query($insertQuery);
@@ -40,7 +42,7 @@
     }
   }
 
-  function deleteUser ($userName, $sql) {
+  function deleteUser ($userName) {
     $deleteQuery = "DELETE FROM users WHERE userName = '".$userName."';";
     $result = $sql->query($deleteQuery);
     if (!$result) {
@@ -50,7 +52,7 @@
     return true;
   }
 
-  function updateUser ($userName, $password, $sql) {
+  function updateUser ($userName, $password) {
     $updateQuery = "UPDATE users SET userName = '".$userName."', password = '".$password."' WHERE userName = '".$userName."';";
     $result = $sql->query($updateQuery);
     if (!$result) {

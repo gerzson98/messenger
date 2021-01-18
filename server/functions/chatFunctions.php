@@ -33,7 +33,15 @@
     }
   }
 
-  function deleteChat () {
-
+  function deleteChat ($chatId) {
+    $delQuery = "DELETE FROM chats WHERE chatId = ".$chatId.";";
+    $result = $sql->query($delQuery);
+    if (!$result) {
+      echo "Something went wrong deleting chat with id: ".$chatId;
+      exit;
+    } else {
+      echo "Succesfull delete of chat with id: ".$chatId;
+      exit;
+    }
   }
 ?>

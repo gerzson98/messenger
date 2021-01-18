@@ -22,8 +22,8 @@
       exit;
     } else {
       if ($_SESSION['loggedInAs'] != $userName) {
-        if (validateUserName($userName, $sql)) {
-          if (!updateUser($userName, $password, $sql)) {
+        if (validateUserName($userName)) {
+          if (!updateUser($userName, $password)) {
             $error = "Something went wrong at updateUser";
             header("Location: ../../index.php?error=" .urlencode($error));
             exit;
@@ -37,7 +37,7 @@
           exit;
         }
       } else {
-        if (!updateUser($userName, $password, $sql)) {
+        if (!updateUser($userName, $password)) {
           $error = "Something went wrong at updateUser";
           header("Location: ../../index.php?error=" .urlencode($error));
           exit;

@@ -10,7 +10,7 @@
       header("Location: ../../index.php?error=".urlencode($error));
       exit;
     } else {
-      if (logIn($userName, $password, $sql)) {
+      if (logIn($userName, $password)) {
         $_SESSION['loggedInAs'] = $userName;
         $_SESSION['viewHandler'] = "cards";
         header("Location: ../../index.php");

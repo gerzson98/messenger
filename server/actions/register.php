@@ -22,7 +22,7 @@
       header("Location: ../../index.php?error=".urlencode($error));
       exit;
     } else {
-      if (register($userName, $password, $sql)) {
+      if (register($userName, $password)) {
         $_SESSION['viewHandler'] = "registerSucceed";
         header("Location: ../../index.php");
         exit;

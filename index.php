@@ -3,6 +3,9 @@
   if (!$_SESSION['viewHandler']) {
     $_SESSION['viewHandler'] = null;
   }
+  if (!$_SESSION['loggedInAs']) {
+    $_SESSION['loggedInAs'] = null;
+  }
 ?>
 
 <!DOCTYPE html>
