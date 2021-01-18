@@ -4,7 +4,7 @@
 
   function getAllMSGById($chatId) {
     include 'D:/Suli/Info/php/messenger/server/db/db.php';
-    $query = "SELECT * FROM messages WHERE chatId = ".$chatId." ORDER BY id DESC;";
+    $query = "SELECT * FROM messages WHERE chatId = ".$chatId." ORDER BY id ASC;";
     $result = $sql->query($query);
     if (!$result) {
       echo "getAllMSGById's query went wrong on DB level. with query: ".$query;

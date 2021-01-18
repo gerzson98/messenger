@@ -155,6 +155,18 @@ body {
   
 }
 
+.myMessageBlock {
+  width: 100%;
+  padding: 5px;
+  background-color: white;
+}
+
+.myMessageBlock span {
+  background-color: white;
+  border: 2px dotted lightgrey;
+  color: lightgrey;
+}
+
 #openChat-button {
   width: 80%;
   height: 80px;
@@ -178,4 +190,15 @@ body {
 #logIn-button {
   height: 30px;
   margin-bottom: 20px;
+}
+
+#messagesBlock {
+  width: 90%;
+  margin-left: 4.5%;
+  margin-right: 4.5%;
+  padding-top: 8px;
+  padding-boddom: 8px;
+  padding-right: 2%;
+  padding-left: 2%;
+  background-color: white;
 }

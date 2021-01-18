@@ -21,7 +21,9 @@
     exit;
   }
 
-  if (isset($_POST['backToCards'])) {
-    
+  if (isset($_POST['back'])) {
+    $_SESSION['viewHandler'] = "cards";
+    header("Location: ../../index.php");
+    exit;
   }
 ?>
