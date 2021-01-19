@@ -1,6 +1,6 @@
 <div class="chatContainer">
   <?php
-    include "D:/Suli/Info/php/messenger/server/functions/chatFunctions.php";
+    include $_SESSION['path']."server/functions/chatFunctions.php";
     $chatId = $_SESSION['chatId'];
     $othersName = getOthersName($chatId);
     if (isset($_POST['loadMore'])) {

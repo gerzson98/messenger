@@ -1,9 +1,9 @@
 <?php
 
-  include 'D:/Suli/Info/php/messenger/server/classes/message.php';
+  include $_SESSION['path'].'server/classes/message.php';
 
   function getAllMSGById($chatId) {
-    include 'D:/Suli/Info/php/messenger/server/db/db.php';
+    include $_SESSION['path'].'server/db/db.php';
     $query = "SELECT * FROM messages WHERE chatId = ".$chatId." ORDER BY id ASC;";
     $result = $sql->query($query);
     if (!$result) {
@@ -22,7 +22,7 @@
   }
 
   function getLastSomeMSGById($chatId, $quantity) {
-    include 'D:/Suli/Info/php/messenger/server/db/db.php';
+    include $_SESSION['path'].'server/db/db.php';
     $query = "SELECT * FROM messages WHERE chatId = ".$chatId." ORDER BY id DESC LIMIT ".$quantity.";";
     $result = $sql->query($query);
     if (!$result) {
@@ -41,7 +41,7 @@
   }
 
   function createMesage($msg) {
-    include 'D:/Suli/Info/php/messenger/server/db/db.php';
+    include $_SESSION['path'].'server/db/db.php';
     $query = "INSERT INTO messages (sentBy, chatId, message, sentAt) VALUES (".$msg->sentBy.", ".$msg->chatId.", '".$msg->message."', '".$msg->sentAt."');";
     $result = $sql->query($query);
     if (!$result) {
@@ -54,7 +54,7 @@
   }
 
   function getLastMSG($chatId) {
-    include 'D:/Suli/Info/php/messenger/server/db/db.php';
+    include $_SESSION['path'].'server/db/db.php';
     $query = "SELECT * FROM messages WHERE chatId = ".$chatId." ORDER by id DESC;";
     $result = $sql->query($query);
     if (!$result) {
@@ -73,7 +73,7 @@
   }
 
   function deleteByChatId($chatId) {
-    include 'D:/Suli/Info/php/messenger/server/db/db.php';
+    include $_SESSION['path'].'server/db/db.php';
     $query = "DELETE * FROM messages WHERE chatId = ".$chatId.";";
     $result = $sql->query($query);
     if (!$result) {

@@ -1,6 +1,6 @@
 <?php
   session_start();
-  include 'D:/Suli/Info/php/messenger/server/functions/messageFunctions.php';
+  include $_SESSION['path'].'server/functions/messageFunctions.php';
 
   if (isset($_POST['sendMessage'])) {
     $chatId = $_POST['chatId'];

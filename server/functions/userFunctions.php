@@ -1,7 +1,7 @@
 <?php
 
   function logIn ($userName, $password) {
-    include 'D:/Suli/Info/php/messenger/server/db/db.php';
+    include $_SESSION['path'].'server/db/db.php';
     $query = "SELECT id FROM users WHERE userName = '".$userName."' AND password = '".$password."';";
     $result = $sql->query($query);
     if (!$result) {
@@ -15,7 +15,7 @@
   }
 
   function getUserId ($userName) {
-    include 'D:/Suli/Info/php/messenger/server/db/db.php';
+    include $_SESSION['path'].'server/db/db.php';
     $getIdQuery = "SELECT id FROM users WHERE userName = '".$userName."';";
     $result = $sql->query($getIdQuery);
     $sql->close();
@@ -34,7 +34,7 @@
   }
 
   function getUserNameById ($userId) {
-    include 'D:/Suli/Info/php/messenger/server/db/db.php';
+    include $_SESSION['path'].'server/db/db.php';
     $query = "SELECT userName FROM users WHERE id = ".$userId.";";
     $result = $sql->query($query);
     $sql->close();
@@ -53,7 +53,7 @@
   }
 
   function validateUserName ($userName) {
-    include 'D:/Suli/Info/php/messenger/server/db/db.php';
+    include $_SESSION['path'].'server/db/db.php';
     $validateUserQuery = "SELECT id FROM users WHERE userName = '".$userName."';";
     $result = $sql->query($validateUserQuery);
     $sql->close();
@@ -68,7 +68,7 @@
   }
 
   function register ($userName, $password) {
-    include 'D:/Suli/Info/php/messenger/server/db/db.php';
+    include $_SESSION['path'].'server/db/db.php';
     if (validateUserName($userName, $sql)) {
       $insertQuery = "INSERT INTO users (userName, password) VALUES ('".$userName."', '".$password."');";
       $result = $sql->query($insertQuery);
@@ -86,7 +86,7 @@
   }
 
   function deleteUser ($userName) {
-    include 'D:/Suli/Info/php/messenger/server/db/db.php';
+    include $_SESSION['path'].'server/db/db.php';
     $deleteQuery = "DELETE FROM users WHERE userName = '".$userName."';";
     $result = $sql->query($deleteQuery);
     $sql->close();
@@ -98,7 +98,7 @@
   }
 
   function updateUser ($userName, $password) {
-    include 'D:/Suli/Info/php/messenger/server/db/db.php';
+    include $_SESSION['path'].'server/db/db.php';
     $updateQuery = "UPDATE users SET userName = '".$userName."', password = '".$password."' WHERE userName = '".$userName."';";
     $result = $sql->query($updateQuery);
     $sql->close();

@@ -1,9 +1,9 @@
 <?php
   include 'userFunctions.php';
   include 'messageFunctions.php';
-  include 'D:/Suli/Info/php/messenger/server/classes/cardData.php';
+  include $_SESSION['path'].'server/classes/cardData.php';
   function getAllChatIds () {
-    include 'D:/Suli/Info/php/messenger/server/db/db.php';
+    include $_SESSION['path'].'server/db/db.php';
     $id = $_SESSION['myId'];
     $query = "SELECT id FROM chats WHERE userOne = ".$id." OR userTwo = ".$id.";";
     $result = $sql->query($query);
@@ -21,7 +21,7 @@
   }
 
   function getUserIdsByChatId ($chatId) {
-    include 'D:/Suli/Info/php/messenger/server/db/db.php';
+    include $_SESSION['path'].'server/db/db.php';
     $query = "SELECT userOne, userTwo FROM chats WHERE id = ".$chatId.";";
     $result = $sql->query($query);
     if (!$result) {
@@ -35,7 +35,7 @@
   }
 
   function getOthersName ($chatId) {
-    include 'D:/Suli/Info/php/messenger/server/db/db.php';
+    include $_SESSION['path'].'server/db/db.php';
     $ids = getUserIdsByChatId($chatId);
     if ($ids['userOne'] == $_SESSION['myId']) {
       return getUserNameById($ids['userTwo']);
@@ -45,7 +45,7 @@
   }
   
   function checkIfExists($userOneId, $userTwoId) {
-    include 'D:/Suli/Info/php/messenger/server/db/db.php';
+    include $_SESSION['path'].'server/db/db.php';
     $query = "SELECT id FROM chats WHERE userOne IN (".$userOneId.", ".$userTwoId.") AND userTwo IN (".$userOneId.", ".$userTwoId.");";
     $result = $sql->query($query);
     $sql->close();
@@ -60,7 +60,7 @@
   }
 
   function createChat ($userName) {
-    include 'D:/Suli/Info/php/messenger/server/db/db.php';
+    include $_SESSION['path'].'server/db/db.php';
     $ids = array();
     $ids[] = getUserId($_SESSION['loggedInAs']);
     $othersId = getUserId($userName);
@@ -90,7 +90,7 @@
   }
 
   function deleteChat ($chatId) {
-    include 'D:/Suli/Info/php/messenger/server/db/db.php';
+    include $_SESSION['path'].'server/db/db.php';
     $delQuery = "DELETE FROM chats WHERE chatId = ".$chatId.";";
     $result = $sql->query($delQuery);
     if (!$result) {
