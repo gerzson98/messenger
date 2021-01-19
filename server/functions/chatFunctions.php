@@ -66,7 +66,7 @@
     $othersId = getUserId($userName);
     if ($othersId == 0) {
       $error = "User does not exist.";
-      header("Location: ../../index.php");
+      header("Location: ../../index.php?error=".urlencode($error));
       exit;
     } else {
       $ids[] = $othersId;
@@ -84,7 +84,7 @@
       }
     } else {
       $error = "Chat between you and this user already exists.";
-      header("Location: ../../index.php");
+      header("Location: ../../index.php?error=".urlencode($error));
       exit;
     }
   }

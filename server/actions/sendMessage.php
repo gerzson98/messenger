@@ -11,7 +11,7 @@
     $sentAt = date("Y-m-d h:i:s");
 
     if (!$message || $message == '') {
-      $error = "Type in the msg to send!";
+      $error = "Type in the message to send!";
       header("Location: ../../index.php?error=".urlencode($error));
       exit;
     } else {

@@ -4,7 +4,11 @@
     $chatId = $_SESSION['chatId'];
     $othersName = getOthersName($chatId);
     $msgCount = 10;
-    $messages = array_reverse(getLastSomeMSGById($chatId, $msgCount));
+    if (isset($_POST['loadMore'])) {
+      $msgCount = $msgCount + 15;
+      header("Location: index.php");
+    }
+    $messages = getLastSomeMSGById($chatId, $msgCount);
   ?>
   <h1><?php echo $othersName; ?></h1>
   <div id="messagesBlock">
@@ -22,7 +26,13 @@
         <?php endif; ?>
       </div>
     <?php endforeach; ?>
+    <div class="messageBlock">
+      <form method="post" action="index.php">
+        <input id="loadMore-btn" type="button" name="loadMore" value="LOAD MORE MESSAGES">
+      </form>
+    </div>
   </div>
+  <?php include './portal/components/errorBox.php'; ?>
   <form method="post" action="../../../server/actions/sendMessage.php">
     <input hidden type="number" name="chatId" value=<?php echo $chatId; ?> >
     <input id="chatMessageInputBox" type="text" name="message" placeholder="Type something...">

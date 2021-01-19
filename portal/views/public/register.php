@@ -11,4 +11,5 @@
     <br>
     <input id="logIn-button" type="submit" name="backToLogIn" value="Back to Log In page">
   </form>
+  <br>
 </div>

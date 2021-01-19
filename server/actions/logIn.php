@@ -23,7 +23,9 @@
         exit;
       }
     }
-  } elseif (isset($_POST['register'])) {
+  }
+  
+  if (isset($_POST['register'])) {
     $_SESSION['viewHandler'] = "register";
     header("Location: ../../index.php");
     exit;

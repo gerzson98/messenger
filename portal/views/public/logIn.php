@@ -13,4 +13,5 @@
     <input id="logIn-button" type="submit" name="logIn" value="LOG IN">
     <input id="logIn-button" type="submit" name="register" value="Register">
   </form>
+  <br>
 </div>
