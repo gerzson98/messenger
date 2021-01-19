@@ -5,6 +5,7 @@
   if (isset($_POST['logIn'])) {
     $userName = $_POST['userName'];
     $password = $_POST['password'];
+    $_SESSION['viewHandler'] = "logIn";
     if (!isset($userName) || $userName == '' || !isset($password) || $password == '') {
       $error = 'Please enter your username and your password!';
       header("Location: ../../index.php?error=".urlencode($error));
