@@ -21,6 +21,25 @@
     }
   }
 
+  function getLastSomeMSGById($chatId, $quantity) {
+    include 'D:/Suli/Info/php/messenger/server/db/db.php';
+    $query = "SELECT * FROM messages WHERE chatId = ".$chatId." ORDER BY id DESC LIMIT ".$quantity.";";
+    $result = $sql->query($query);
+    if (!$result) {
+      echo "getAllMSGById's query went wrong on DB level. with query: ".$query;
+      exit;
+    } else {
+      $messages = array();
+      while ($row = $result->fetch_array(MYSQLI_ASSOC)) {
+        $sentAt = substr($row['sentAt'], -8, 5);
+        $message = new message($row['chatId'], $sentAt, $row['message'], $row['sentBy']);
+        $messages[] = $message;
+      }
+      $result->free();
+      return $messages;
+    }
+  }
+
   function createMesage($msg) {
     include 'D:/Suli/Info/php/messenger/server/db/db.php';
     $query = "INSERT INTO messages (sentBy, chatId, message, sentAt) VALUES (".$msg->sentBy.", ".$msg->chatId.", '".$msg->message."', '".$msg->sentAt."');";

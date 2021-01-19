@@ -23,9 +23,13 @@
       echo "getUserId's query went wrong on DB level.";
       exit;
     } else {
-      $id = mysqli_fetch_assoc($result)['id'];
+      $id = mysqli_fetch_assoc($result);
       $result->free();
-      return $id;
+      if (!$id['id']) {
+        return 0;
+      } else {
+        return $id['id'];
+      }
     }
   }
 

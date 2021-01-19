@@ -3,7 +3,8 @@
     include "D:/Suli/Info/php/messenger/server/functions/chatFunctions.php";
     $chatId = $_SESSION['chatId'];
     $othersName = getOthersName($chatId);
-    $messages = getAllMSGById($chatId);
+    $msgCount = 10;
+    $messages = array_reverse(getLastSomeMSGById($chatId, $msgCount));
   ?>
   <h1><?php echo $othersName; ?></h1>
   <div id="messagesBlock">

@@ -2,14 +2,13 @@
   include 'userFunctions.php';
   include 'messageFunctions.php';
   include 'D:/Suli/Info/php/messenger/server/classes/cardData.php';
-
   function getAllChatIds () {
     include 'D:/Suli/Info/php/messenger/server/db/db.php';
     $id = $_SESSION['myId'];
-    $getAllQuery = "SELECT id FROM chats WHERE userOne = ".$id." OR userTwo = ".$id.";";
-    $result = $sql->query($getAllQuery);
+    $query = "SELECT id FROM chats WHERE userOne = ".$id." OR userTwo = ".$id.";";
+    $result = $sql->query($query);
     if (!$result) {
-      echo "Something went wrong with getAllChatId's query.";
+      echo "Something went wrong with getAllChatId's query.".$query;
       exit;
     } else {
       $chatIds = array();
@@ -64,7 +63,14 @@
     include 'D:/Suli/Info/php/messenger/server/db/db.php';
     $ids = array();
     $ids[] = getUserId($_SESSION['loggedInAs']);
-    $ids[] = getUserId($userName);
+    $othersId = getUserId($userName);
+    if ($othersId == 0) {
+      $error = "User does not exist.";
+      header("Location: ../../index.php");
+      exit;
+    } else {
+      $ids[] = $othersId;
+    }
     if (!checkIfExists($ids[0], $ids[1])) {
       $createQuery = "INSERT INTO chats (userOne, userTwo) VALUES (".$ids[0].", ".$ids[1].");";
       $result = $sql->query($createQuery);

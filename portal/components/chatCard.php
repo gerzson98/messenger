@@ -2,7 +2,13 @@
   <h3> <?php echo $data->othersName; ?></h3>
   <div class="chatBox">
     <span><?php echo $data->lastMessage->sentAt; ?> </span>
-    <?php echo $data->lastMessage->message; ?>
+    <?php
+     if(strlen($data->lastMessage->message) > 80) {
+       echo substr($data->lastMessage->message, 0, 80)."...";
+     } else {
+       echo $data->lastMessage->message;
+     }
+    ?>
   </div>
   <form method="post" action="../../server/actions/sendMessage.php">
     <input hidden type="text" name="chatId" value=<?php echo $data->chatId; ?> >
