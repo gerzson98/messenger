@@ -3,12 +3,12 @@
     include "D:/Suli/Info/php/messenger/server/functions/chatFunctions.php";
     $chatId = $_SESSION['chatId'];
     $othersName = getOthersName($chatId);
-    $msgCount = 10;
     if (isset($_POST['loadMore'])) {
-      $msgCount = $msgCount + 15;
-      header("Location: index.php");
+      $_SESSION['msgCount'] += 15;
+      header("Location: ./index.php");
+      exit;
     }
-    $messages = getLastSomeMSGById($chatId, $msgCount);
+    $messages = getLastSomeMSGById($chatId, $_SESSION['msgCount']);
   ?>
   <h1><?php echo $othersName; ?></h1>
   <div id="messagesBlock">
@@ -27,8 +27,8 @@
       </div>
     <?php endforeach; ?>
     <div class="messageBlock">
-      <form method="post" action="index.php">
-        <input id="loadMore-btn" type="button" name="loadMore" value="LOAD MORE MESSAGES">
+      <form method="post" action="./index.php">
+        <input id="loadMore-btn" type="submit" name="loadMore" value="LOAD MORE MESSAGES">
       </form>
     </div>
   </div>
