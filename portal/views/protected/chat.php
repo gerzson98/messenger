@@ -5,25 +5,26 @@
     $othersName = getOthersName($chatId);
     $messages = getAllMSGById($chatId);
   ?>
+  <h1><?php echo $othersName; ?></h1>
   <div id="messagesBlock">
     <?php foreach($messages as $message) : ?>
-      <?php if($message->sentBy == $_SESSION['myId']) : ?>
-        <div class="myMessageBlock">
-          <span><?php echo $message->sentAt?> </span>
-          <?php echo $message->message; ?>
-        </div>
-      <?php else : ?>
-        <div class="othersMessageBlock">
-          <span><?php echo $message->sentAt?> </span>
-          <?php echo $message->message; ?>
-        </div>
-      <?php endif; ?>
+      <div class="messageBlock">
+        <span><?php echo $message->sentAt?> </span>
+        <?php if($message->sentBy == $_SESSION['myId']) : ?>
+          <div class="myMessageBlock">
+            <p><?php echo $message->message; ?></p>
+          </div>
+        <?php else : ?>
+          <div class="othersMessageBlock">
+            <p><?php echo $message->message; ?></p>
+          </div>
+        <?php endif; ?>
+      </div>
     <?php endforeach; ?>
   </div>
   <form method="post" action="../../../server/actions/sendMessage.php">
     <input hidden type="number" name="chatId" value=<?php echo $chatId; ?> >
     <input id="chatMessageInputBox" type="text" name="message" placeholder="Type something...">
-    <input id="send-button" type="submit" name="sendMessage" value="SEND">
+    <input id="chatSendButton" type="submit" name="sendMessage" value="SEND">
   </form>
-  
 </div>

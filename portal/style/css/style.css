@@ -31,7 +31,18 @@ body {
   overflow: hidden;
 }
 
+#cardsContainer {
+  width: 90%;
+  margin-left: 4.5%;
+  margin-right: 4.5%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+}
+
 .profileBlock {
+  margin-left: 90%;
   padding: 5px;
   text-align: center;
   max-height: 120px;
@@ -64,6 +75,7 @@ body {
 }
 
 .card {
+  flex: none;
   flex-direction: row;
   width: 250px;
   height: 350px;
@@ -73,7 +85,7 @@ body {
   background-color: rgb(105, 99, 99);
 }
 
-.card h4 {
+.card h3 {
   text-align: center;
   color: white;
   width: 100%;
@@ -112,12 +124,13 @@ body {
   height: 100px;
   margin-left: 9%;
   margin-right: 9%;
-  margint-top: 20px;
+  margin-top: 20px;
   margin-bottom: 20px;
   background-color: white;
 }
 
 .addCard {
+  flex: none;
   flex-direction: row;
   font-size: larger;
   width: 250px;
@@ -147,24 +160,75 @@ body {
   padding-bottom: 5px;
 }
 
-.chatContainer div {
+.chatContainer {
   width: 80%;
   margin-left: 9%;
   margin-right: 9%;
   background-color: rgb(105, 99, 99);
-  
+}
+
+.chatContainer form {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  padding: 4.5%;
+  padding-bottom: 2.5%;
+  padding-top: 1%;
+}
+
+.chatContainer h1 {
+  padding: 2.5%;
+  padding-left: 4.5%;
+  color: white;
+}
+
+.messageBlock {
+  width: 100%;
+  display: flex;
+  border-bottom: 2px dotted lightgrey;
+}
+
+.messageBlock span {
+    background-color: white;
+    text-align: left;
+    border: 2px dotted lightgrey;
+    color: lightgrey;
 }
 
 .myMessageBlock {
   width: 100%;
   padding: 5px;
+  display: flex;
+  justify-content: flex-end;
   background-color: white;
 }
 
-.myMessageBlock span {
+
+.myMessageBlock p {
+  max-width: 60%;
+  background-color:rgb(194, 194, 194);
+  padding: 5px;
+  border-radius: 5px;
+  text-align: justify;
+  align-self: flex-end;
+}
+
+.othersMessageBlock {
+  width: 100%;
+  padding: 5px;
+  display: flex;
+  justify-content: flex-start;
   background-color: white;
-  border: 2px dotted lightgrey;
-  color: lightgrey;
+}
+
+
+.othersMessageBlock p {
+  max-width: 60%;
+  background-color:rgb(134, 134, 134);
+  padding: 5px;
+  border-radius: 5px;
+  text-align: justify;
+  align-self: flex-end;
 }
 
 #openChat-button {
@@ -181,10 +245,12 @@ body {
 }
 
 #send-button {
+  flex: none;
+  flex-direction: row;
   height: 35px;
+  margin: 0;
+  margin-top: 4%;
   width: 20%;
-  margin-left: 0;
-  margin-right: 9%
 }
 
 #logIn-button {
@@ -192,12 +258,27 @@ body {
   margin-bottom: 20px;
 }
 
+#chatMessageInputBox {
+  flex: none;
+  flex-direction: row;
+  width: 80%;
+  margin-right: 4.5%;
+  height: 80px;
+}
+
+#chatSendButton {
+  flex: none;
+  flex-direction: row;
+  height: 80px;
+  margin: 0;
+  width: 15%;
+}
+
 #messagesBlock {
-  width: 90%;
+  width: 87%;
   margin-left: 4.5%;
   margin-right: 4.5%;
-  padding-top: 8px;
-  padding-boddom: 8px;
+  margin-bottom: 30px;
   padding-right: 2%;
   padding-left: 2%;
   background-color: white;

@@ -1,5 +1,5 @@
 <div class="card">
-  <h4> <?php echo $data->othersName; ?></h4>
+  <h3> <?php echo $data->othersName; ?></h3>
   <div class="chatBox">
     <span><?php echo $data->lastMessage->sentAt; ?> </span>
     <?php echo $data->lastMessage->message; ?>
