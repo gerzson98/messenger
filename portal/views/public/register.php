@@ -3,9 +3,9 @@
   <form method="post" action="../../server/actions/register.php">
     <input type="text" name="userName" placeholder="Enter your username!">
     <br>
-    <input type="text" name="password" placeholder="Enter your password!">
+    <input type="password" name="password" placeholder="Enter your password!">
     <br>
-    <input type="text" name="passwordAgain" placeholder="Repeat your password!">
+    <input type="password" name="passwordAgain" placeholder="Repeat your password!">
     <br>
     <input id="logIn-button" type="submit" name="register" value="REGISTER">
     <br>

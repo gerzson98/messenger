@@ -8,7 +8,7 @@
   <form method="post" action="../../server/actions/logIn.php">
     <input type="text" name="userName" placeholder="Enter your username!">
     <br>
-    <input type="text" name="password" placeholder="Enter your password!">
+    <input type="password" name="password" placeholder="Enter your password!">
     <br>
     <input id="logIn-button" type="submit" name="logIn" value="LOG IN">
     <input id="logIn-button" type="submit" name="register" value="Register">

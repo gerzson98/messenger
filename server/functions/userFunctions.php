@@ -2,7 +2,7 @@
 
   function logIn ($userName, $password) {
     include $_SESSION['path'].'server/db/db.php';
-    $query = "SELECT id FROM users WHERE userName = '".$userName."' AND password = '".$password."';";
+    $query = "SELECT password FROM users WHERE userName = '".$userName."';";
     $result = $sql->query($query);
     if (!$result) {
       die('logIn query went wrong;' .$query);
@@ -10,7 +10,8 @@
     } elseif ($result->num_rows == 0) {
       return false;
     } else {
-      return true;
+      $dbPassword = $result->fetch_array(MYSQLI_ASSOC)['password'];
+      return password_verify($password, $dbPassword);
     }
   }
 
@@ -69,16 +70,20 @@
 
   function register ($userName, $password) {
     include $_SESSION['path'].'server/db/db.php';
-    if (validateUserName($userName, $sql)) {
-      $insertQuery = "INSERT INTO users (userName, password) VALUES ('".$userName."', '".$password."');";
+    if (validateUserName($userName)) {
+      $pwToDb = password_hash($password, PASSWORD_DEFAULT);
+      $insertQuery = "INSERT INTO users (userName, password) VALUES ('".$userName."', '".$pwToDb."');";
       $result = $sql->query($insertQuery);
       if ($sql->connect_errno) {
-        echo "Something went wrong during insert; %s" .$sql->connect_error;
         $sql->close();
         return false;
+      } elseif (!$result) {
+        $sql->close();
+        return false;
+      } else {
+        $sql->close();
+        return true;
       }
-      $sql->close();
-      return true;
     } else {
       $sql->close();
       return false;
@@ -99,7 +104,8 @@
 
   function updateUser ($userName, $password) {
     include $_SESSION['path'].'server/db/db.php';
-    $updateQuery = "UPDATE users SET userName = '".$userName."', password = '".$password."' WHERE userName = '".$userName."';";
+    $pwToDb = password_hash($password, PASSWORD_DEFAULT);
+    $updateQuery = "UPDATE users SET userName = '".$userName."', password = '".$pwToDb."' WHERE userName = '".$userName."';";
     $result = $sql->query($updateQuery);
     $sql->close();
     if (!$result) {
